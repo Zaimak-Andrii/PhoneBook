@@ -1,3 +1,20 @@
+import { useLoginMutation } from 'services/auth';
+
 export default function LoginPage() {
-  return <h1>Login</h1>;
+  const [callLogin] = useLoginMutation();
+
+  return (
+    <>
+      <button
+        onClick={() =>
+          callLogin({
+            email: 'andriizaimak8@gmail.com',
+            password: 'examplepwd12345',
+          })
+        }
+      >
+        Login
+      </button>
+    </>
+  );
 }

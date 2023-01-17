@@ -37,6 +37,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRefreshQuery,
+  useLazyRefreshQuery,
 } = authApi;
 
 export const {
