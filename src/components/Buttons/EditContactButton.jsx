@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { useUpdateContactMutation } from 'services/contactsAPI';
 import { FiEdit } from 'react-icons/fi';
 
