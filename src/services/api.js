@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { selectToken } from '../redux/auth/auth.selectors';
 
 const baseQuery = fetchBaseQuery({
@@ -12,11 +12,10 @@ const baseQuery = fetchBaseQuery({
     return headers;
   },
 });
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 2 });
 
 export const api = createApi({
   reducerPath: 'authApi',
-  baseQuery: baseQueryWithRetry,
+  baseQuery: baseQuery,
   tagTypes: ['Contacts'],
   endpoints: () => ({}),
 });

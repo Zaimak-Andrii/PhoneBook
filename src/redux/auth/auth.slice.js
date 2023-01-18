@@ -7,6 +7,7 @@ const initialState = {
   user: null,
   token: null,
   isAuthenticated: false,
+  isRefreshing: false,
 };
 
 const authSlice = createSlice({
@@ -20,6 +21,7 @@ const authSlice = createSlice({
       })
       .addMatcher(refresh.matchPending, (state, action) => {
         console.log('Refresh pending', action.type);
+        state.isRefreshing = true;
       })
       .addMatcher(login.matchPending, (state, action) => {
         console.log('Login pending', action.type);
@@ -28,34 +30,39 @@ const authSlice = createSlice({
         console.log('Logout pending', action.type);
       })
       .addMatcher(register.matchFulfilled, (state, action) => {
-        console.log('Register fulfilled', action);
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
       })
       .addMatcher(login.matchFulfilled, (state, action) => {
-        console.log('Login fulfilled', action);
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
       })
       .addMatcher(refresh.matchFulfilled, (state, action) => {
-        console.log('Refresh fulfilled', action.payload);
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.isRefreshing = false;
       })
-      .addMatcher(logout.matchFulfilled, (_, action) => {
-        console.log('Logout fulfilled', action);
-        return { ...initialState };
-      })
+      .addMatcher(logout.matchFulfilled, () => ({ ...initialState }))
       .addMatcher(register.matchRejected, (state, action) => {
-        console.log('rejected', action);
+        console.log('Register rejected', action);
+      })
+      .addMatcher(login.matchRejected, (state, action) => {
+        console.log('Login rejected', action);
+      })
+      .addMatcher(logout.matchRejected, state => {
+        state.token = null;
+      })
+      .addMatcher(refresh.matchRejected, state => {
+        state.token = null;
+        state.isRefreshing = false;
       });
   },
 });
 
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage,
   whitelist: ['token'],
 };

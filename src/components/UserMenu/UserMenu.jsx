@@ -1,37 +1,40 @@
-import { Avatar, Flex, IconButton, Stack, Text } from '@chakra-ui/react';
-import { FiLogOut } from 'react-icons/fi';
+import { Avatar, Stack, Text } from '@chakra-ui/react';
 import { ButtonLink } from '../Buttons/ButtonLink';
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from 'redux/auth/auth.selectors';
-import { useLogoutMutation } from 'services/auth';
+import {
+  selectIsAuthenticated,
+  selectIsRefreshing,
+  selectUser,
+} from 'redux/auth/auth.selectors';
+import { useLocation } from 'react-router-dom';
+import { LogoutButton } from 'components/Buttons';
 
 export default function UserMenu() {
+  const location = useLocation();
+  const isShowLogin =
+    location.pathname !== '/login' && location.pathname !== '/register';
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const [callLogout] = useLogoutMutation();
+  const isRefreshing = useSelector(selectIsRefreshing);
+  const user = useSelector(selectUser);
+
+  if (isRefreshing) return;
+
+  if (isAuthenticated) {
+    return (
+      <Stack direction="row" alignItems="center" ml="auto">
+        <Avatar name={user?.name} size="sm" />
+        <Text color="facebook.50">{user?.email}</Text>
+        <LogoutButton />
+      </Stack>
+    );
+  }
 
   return (
     <>
-      {isAuthenticated ? (
-        <Stack direction="row" alignItems="center" ml="auto">
-          <Avatar name="Andrii Zaimak" size="sm" />
-          <Text color="facebook.50">dev.andrii.zaimak@gmail.com</Text>
-          <IconButton
-            colorScheme="facebook"
-            aria-label="Logout"
-            size="sm"
-            icon={<FiLogOut />}
-            onClick={callLogout}
-          />
-        </Stack>
-      ) : (
-        <Flex gap={4} ml="auto">
-          <ButtonLink to="/login" colorScheme="green">
-            Sign In
-          </ButtonLink>
-          <ButtonLink to="/register" colorScheme="orange" color="white">
-            Sign Up
-          </ButtonLink>
-        </Flex>
+      {isShowLogin && (
+        <ButtonLink to="/login" colorScheme="green" ml="auto">
+          Sign In
+        </ButtonLink>
       )}
     </>
   );

@@ -1,7 +1,11 @@
 import { App } from 'components/App';
-import { ContactsPage, HomePage, LoginPage, RegistrationPage } from 'pages';
+import { HomePage, PrivatePage, RegistrationPage, RestrictedPage } from 'pages';
+import { lazy } from 'react';
 
 const { createBrowserRouter } = require('react-router-dom');
+
+const ContactsPage = lazy(() => import('pages/Contacts'));
+const LoginPage = lazy(() => import('pages/Auth/Login.page'));
 
 const router = createBrowserRouter(
   [
@@ -10,8 +14,16 @@ const router = createBrowserRouter(
       element: <App />,
       children: [
         { index: true, element: <HomePage /> },
-        { path: '/contacts', element: <ContactsPage /> },
-        { path: '/login', element: <LoginPage /> },
+        {
+          path: '/contacts',
+          element: (
+            <PrivatePage redirectTo="/login" component={<ContactsPage />} />
+          ),
+        },
+        {
+          path: '/login',
+          element: <RestrictedPage redirectTo="/" component={<LoginPage />} />,
+        },
         { path: '/register', element: <RegistrationPage /> },
       ],
     },
