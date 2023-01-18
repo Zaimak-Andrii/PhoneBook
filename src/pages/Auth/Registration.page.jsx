@@ -1,8 +1,11 @@
-import { Divider, Heading, VStack } from '@chakra-ui/react';
+import { Divider, Heading, Text, VStack } from '@chakra-ui/react';
 import { ButtonLink } from 'components/Buttons';
+import { routes } from 'constants/routes';
 import { RegistrationForm } from '../../components/Auth/RegistrationForm/RegistrationForm';
+import { useLocation } from 'react-router-dom';
 
 export default function RegistrationPage() {
+  const location = useLocation();
   return (
     <>
       <VStack w="sm" mx="auto">
@@ -12,9 +15,17 @@ export default function RegistrationPage() {
         <RegistrationForm />
         <Divider py="2" />
 
-        <ButtonLink to="/login" variant="link" color="teal">
-          I'm already member
-        </ButtonLink>
+        <Text>
+          Already a member?&nbsp;{' '}
+          <ButtonLink
+            to={routes.LOGIN}
+            variant="link"
+            color="teal"
+            state={location.state}
+          >
+            Sign in
+          </ButtonLink>
+        </Text>
       </VStack>
     </>
   );

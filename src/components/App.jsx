@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectIsAuthenticated, selectToken } from 'redux/auth/auth.selectors';
 import { Layout } from './Layout';
 import { PrivatePage, RestrictedPage } from 'pages';
+import { routes } from 'constants/routes';
 
 const HomePage = lazy(() => import('pages/Home'));
 const ContactsPage = lazy(() => import('pages/Contacts'));
@@ -23,28 +24,31 @@ export const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path={routes.HOME} element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route
-            path="contacts"
+            path={routes.CONTACTS}
             element={
-              <PrivatePage redirectTo="/login" component={<ContactsPage />} />
+              <PrivatePage
+                redirectTo={routes.LOGIN}
+                component={<ContactsPage />}
+              />
             }
           />
           <Route
-            path="login"
+            path={routes.LOGIN}
             element={
               <RestrictedPage
-                redirectTo="/contacts"
+                redirectTo={routes.HOME}
                 component={<LoginPage />}
               />
             }
           />
           <Route
-            path="register"
+            path={routes.REGISTER}
             element={
               <RestrictedPage
-                redirectTo="/contacts"
+                redirectTo={routes.HOME}
                 component={<RegistrationPage />}
               />
             }

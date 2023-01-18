@@ -44,25 +44,6 @@ export default function AuthForm({
             isTouched={touchedFields[name]}
           />
         ))}
-        {/* <FormInput
-          label="Email"
-          id="login-email"
-          placeholder="Email"
-          type="email"
-          {...register('email')}
-          error={errors.email}
-          isTouched={touchedFields.email}
-        />
-
-        <FormInputPassword
-          id="login-password"
-          label="Password"
-          placeholder="Password"
-          {...register('password')}
-          error={errors.password}
-          isTouched={touchedFields.password}
-        /> */}
-
         <Button
           width="100%"
           type="submit"

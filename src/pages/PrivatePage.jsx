@@ -1,10 +1,11 @@
+import { routes } from 'constants/routes';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { selectIsRefreshing, selectToken } from 'redux/auth/auth.selectors';
 
 export default function PrivatePage({
   component: Component,
-  redirectTo = '/login',
+  redirectTo = routes.LOGIN,
 }) {
   const location = useLocation();
   const token = useSelector(selectToken);
