@@ -1,6 +1,6 @@
 import { IconButton } from '@chakra-ui/react';
 import { FiLogOut } from 'react-icons/fi';
-import { useLogoutMutation } from 'services/auth';
+import { useLogoutMutation } from 'services/authAPI';
 
 export const LogoutButton = () => {
   const [callLogout, { isLoading }] = useLogoutMutation();

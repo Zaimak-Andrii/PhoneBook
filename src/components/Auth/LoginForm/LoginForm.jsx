@@ -1,5 +1,5 @@
 import { FormInput, FormInputPassword } from '../FormInput';
-import { useLoginMutation } from 'services/auth';
+import { useLoginMutation } from 'services/authAPI';
 import { useAppToast } from 'hooks/useAppToast';
 import { loginSchema } from '../auth.validation';
 import AuthForm from '../AuthForm/AuthForm';

@@ -1,6 +1,6 @@
 import { lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useLazyRefreshQuery } from 'services/auth';
+import { useLazyRefreshQuery } from 'services/authAPI';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated, selectToken } from 'redux/auth/auth.selectors';
 import { Layout } from './Layout';

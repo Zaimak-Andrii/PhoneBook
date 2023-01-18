@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
-import { login, logout, refresh, register } from 'services/auth';
+import { login, logout, refresh, register } from 'services/authAPI';
 
 const initialState = {
   user: null,
@@ -53,6 +53,7 @@ const authSlice = createSlice({
       })
       .addMatcher(logout.matchRejected, state => {
         state.token = null;
+        state.isRefreshing = false;
       })
       .addMatcher(refresh.matchRejected, state => {
         state.token = null;

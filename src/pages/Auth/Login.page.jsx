@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 
 export default function LoginPage() {
   const location = useLocation();
-  console.log(location);
   return (
     <>
       <VStack w="sm" mx="auto">
