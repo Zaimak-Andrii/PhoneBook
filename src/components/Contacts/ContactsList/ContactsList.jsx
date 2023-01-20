@@ -14,12 +14,11 @@ import { useGetContactsQuery } from 'services/contactsAPI';
 
 export default function ContactsList({ filter }) {
   const { data: contacts, isFetching } = useGetContactsQuery(undefined, {
-    // refetchOnMountOrArgChange: true,
     selectFromResult: result => ({
       ...result,
       data:
         result.data?.filter(contact =>
-          contact.name.toLowerCase().includes(filter)
+          contact.name.toLowerCase().includes(filter.toLowerCase())
         ) ?? [],
     }),
   });

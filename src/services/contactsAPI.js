@@ -4,10 +4,10 @@ export const contactsAPI = api.injectEndpoints({
   endpoints: build => ({
     getContacts: build.query({
       query: () => ({ url: 'contacts' }),
-      providesTags: (result = []) => [
-        ...result.map(({ id }) => ({ type: 'Contacts', id })),
-        { type: 'Contacts', id: 'LIST' },
-      ],
+      providesTags: (result, error, arg) =>
+        result
+          ? [...result.map(({ id }) => ({ type: 'Contacts', id })), 'Contacts']
+          : ['Contacts'],
     }),
     addContact: build.mutation({
       query: contact => {
@@ -17,14 +17,14 @@ export const contactsAPI = api.injectEndpoints({
           body: contact,
         };
       },
-      invalidatesTags: [{ type: 'Contacts', id: 'LIST' }],
+      invalidatesTags: ['Contacts'],
     }),
     deleteContact: build.mutation({
       query: contactId => ({
         url: `contacts/${contactId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: contact => [{ type: 'Contacts', id: contact?.id }],
+      invalidatesTags: (result, error, id) => [{ type: 'Contacts', id: id }],
     }),
     updateContact: build.mutation({
       query: ({ id, ...contact }) => ({
@@ -32,7 +32,9 @@ export const contactsAPI = api.injectEndpoints({
         method: 'PATCH',
         body: contact,
       }),
-      invalidatesTags: contact => [{ type: 'Contacts', id: contact?.id }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'Contacts', id: id },
+      ],
     }),
   }),
 });

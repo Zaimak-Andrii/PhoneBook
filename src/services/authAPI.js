@@ -10,6 +10,7 @@ export const authApi = api.injectEndpoints({
           body: credentials,
         };
       },
+      invalidatesTags: ['Contacts'],
     }),
     login: build.mutation({
       query: credentials => ({
@@ -17,6 +18,7 @@ export const authApi = api.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
+      invalidatesTags: ['Contacts'],
     }),
     logout: build.mutation({
       query: () => ({

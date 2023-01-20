@@ -51,10 +51,7 @@ const authSlice = createSlice({
       .addMatcher(login.matchRejected, (state, action) => {
         console.log('Login rejected', action);
       })
-      .addMatcher(logout.matchRejected, state => {
-        state.token = null;
-        state.isRefreshing = false;
-      })
+      .addMatcher(logout.matchRejected, state => ({ ...initialState }))
       .addMatcher(refresh.matchRejected, state => {
         state.token = null;
         state.isRefreshing = false;
