@@ -35,24 +35,6 @@ export default function LoginForm() {
   const toast = useAppToast();
   const ref = useRef(null);
 
-  // async function submitHandler(data) {
-  //   try {
-  //     const { user } = await callLogin(data).unwrap();
-
-  //     toast({
-  //       title: 'Login success!',
-  //       status: 'success',
-  //       description: `Welcome ${user?.name}!`,
-  //     });
-  //   } catch (error) {
-  //     toast({
-  //       title: 'Login failed!',
-  //       status: 'error',
-  //       description: 'Something went wrong with login.',
-  //     });
-  //   }
-  // }
-
   async function submitHandler(data) {
     ref.current = callLogin(data);
 

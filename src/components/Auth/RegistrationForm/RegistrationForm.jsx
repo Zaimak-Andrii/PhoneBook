@@ -3,6 +3,7 @@ import { useRegisterMutation } from 'services/authAPI';
 import { useAppToast } from 'hooks/useAppToast';
 import { registrationSchema } from '../auth.validation';
 import AuthForm from '../AuthForm/AuthForm';
+import { useEffect, useRef } from 'react';
 
 const initialValues = {
   name: '',
@@ -45,10 +46,12 @@ const fields = [
 export function RegistrationForm() {
   const [callRegistration] = useRegisterMutation();
   const toast = useAppToast();
+  const ref = useRef(null);
 
   async function submitHandler({ passwordConfirmation, ...otherData }) {
+    ref.current = callRegistration(otherData);
     try {
-      const { user } = await callRegistration(otherData).unwrap();
+      const { user } = await ref.current.unwrap();
 
       toast({
         title: 'Registration success!',
@@ -56,13 +59,25 @@ export function RegistrationForm() {
         description: `Welcome ${user?.name}!`,
       });
     } catch (error) {
-      toast({
-        title: 'Registration failed!',
-        status: 'error',
-        description: 'Something went wrong with registration.',
-      });
+      if (error.status === 400) {
+        toast({
+          title: 'Registration failed!',
+          status: 'error',
+          description: 'Something went wrong with registration.',
+        });
+      } else if (error.name === 'AbortError') {
+        toast({
+          status: 'warning',
+          description: 'Registration has been aboted.',
+        });
+      }
     }
   }
+  useEffect(() => {
+    return () => {
+      ref.current?.abort();
+    };
+  }, []);
 
   return (
     <AuthForm

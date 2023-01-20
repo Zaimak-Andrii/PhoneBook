@@ -4,10 +4,10 @@ export const contactsAPI = api.injectEndpoints({
   endpoints: build => ({
     getContacts: build.query({
       query: () => ({ url: 'contacts' }),
-      providesTags: (result, error, arg) =>
-        result
-          ? [...result.map(({ id }) => ({ type: 'Contacts', id })), 'Contacts']
-          : ['Contacts'],
+      providesTags: (result = []) => [
+        ...result.map(({ id }) => ({ type: 'Contacts', id })),
+        { type: 'Contacts', id: 'LIST' },
+      ],
     }),
     addContact: build.mutation({
       query: contact => {
@@ -17,14 +17,16 @@ export const contactsAPI = api.injectEndpoints({
           body: contact,
         };
       },
-      invalidatesTags: ['Contacts'],
+      invalidatesTags: (_result, error) =>
+        error?.status === 401 ? [] : [{ type: 'Contacts', id: 'LIST' }],
     }),
     deleteContact: build.mutation({
       query: contactId => ({
         url: `contacts/${contactId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Contacts', id: id }],
+      invalidatesTags: (_result, error, id) =>
+        error?.status === 401 ? [] : [{ type: 'Contacts', id }],
     }),
     updateContact: build.mutation({
       query: ({ id, ...contact }) => ({
@@ -32,9 +34,8 @@ export const contactsAPI = api.injectEndpoints({
         method: 'PATCH',
         body: contact,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: 'Contacts', id: id },
-      ],
+      invalidatesTags: (_result, error, { id }) =>
+        error?.status === 401 ? [] : [{ type: 'Contacts', id }],
     }),
   }),
 });

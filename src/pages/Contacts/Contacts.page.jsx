@@ -6,14 +6,25 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { ContactsList } from 'components/Contacts';
-import AddContact from 'components/Contacts/AddContact';
+import UpsertContact from 'components/Contacts/UpsertContact';
+
 import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 
 export default function ContactsPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [updateContact, setUpdateContact] = useState(null);
   const [filter, setFilter] = useState('');
   const inputSearchHandler = evt => setFilter(evt.target.value);
+
+  const updateContactHandler = initialValues => {
+    setUpdateContact(initialValues);
+    onOpen();
+  };
+  const closeContactHandler = () => {
+    setUpdateContact('');
+    onClose();
+  };
 
   return (
     <>
@@ -38,9 +49,15 @@ export default function ContactsPage() {
         Create user
       </Button>
 
-      <ContactsList filter={filter} />
+      <ContactsList filter={filter} onUpdateContact={updateContactHandler} />
 
-      <AddContact isOpen={isOpen} onClose={onClose} />
+      {isOpen && (
+        <UpsertContact
+          isOpen={isOpen}
+          onClose={closeContactHandler}
+          initialValues={updateContact}
+        />
+      )}
     </>
   );
 }

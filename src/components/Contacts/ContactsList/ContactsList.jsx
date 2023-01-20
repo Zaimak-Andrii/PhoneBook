@@ -1,18 +1,8 @@
-import {
-  Avatar,
-  Card,
-  CardBody,
-  CardFooter,
-  Heading,
-  HStack,
-  SimpleGrid,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
-import { DeleteContactButton, UpdateContactButton } from 'components/Buttons';
+import { SimpleGrid, Spinner } from '@chakra-ui/react';
 import { useGetContactsQuery } from 'services/contactsAPI';
+import ContactCard from '../ContactCard';
 
-export default function ContactsList({ filter }) {
+export default function ContactsList({ filter, onUpdateContact }) {
   const { data: contacts, isFetching } = useGetContactsQuery(undefined, {
     selectFromResult: result => ({
       ...result,
@@ -38,23 +28,12 @@ export default function ContactsList({ filter }) {
         />
       )}
       <SimpleGrid columns={[1, null, 4, 5, 6]} spacing={4}>
-        {contacts?.map(({ id, name, number }) => (
-          <Card key={id}>
-            <CardBody textAlign="center">
-              <Avatar name={name} size="xl" />
-              <Heading as="p" size="sm">
-                {name}
-              </Heading>
-              <Text>{number}</Text>
-            </CardBody>
-
-            <CardFooter justifyContent="center">
-              <HStack>
-                <UpdateContactButton contact={{ id, name, number }} />
-                <DeleteContactButton id={id} />
-              </HStack>
-            </CardFooter>
-          </Card>
+        {contacts?.map(contact => (
+          <ContactCard
+            key={contact.id}
+            contact={contact}
+            onUpdateContact={() => onUpdateContact(contact)}
+          />
         ))}
       </SimpleGrid>
     </>
