@@ -7,10 +7,10 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 
 const initialValues = {
-  email: 'dev.andrii.zaimak@gmail.com',
-  password: 'qwer1234',
-  // email: '',
-  // password: '',
+  // email: 'dev.andrii.zaimak@gmail.com',
+  // password: 'qwer1234',
+  email: '',
+  password: '',
 };
 
 const fields = [

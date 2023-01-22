@@ -3,6 +3,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Flex,
   Heading,
   HStack,
   Text,
@@ -14,7 +15,7 @@ export default function ContactsCard({ contact, onUpdateContact }) {
 
   return (
     <Card>
-      <CardBody textAlign="center">
+      <CardBody as={Flex} flexDirection="column" alignItems="center" gap={2}>
         <Avatar name={name} size="xl" />
         <Heading as="p" size="sm">
           {name}
@@ -22,7 +23,7 @@ export default function ContactsCard({ contact, onUpdateContact }) {
         <Text>{number}</Text>
       </CardBody>
 
-      <CardFooter justifyContent="center">
+      <CardFooter justifyContent="center" pt={0}>
         <HStack>
           <UpdateContactButton onUpdateContact={onUpdateContact} />
           <DeleteContactButton id={id} />
