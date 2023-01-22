@@ -6,6 +6,7 @@ import { selectIsAuthenticated, selectToken } from 'redux/auth/auth.selectors';
 import { Layout } from './Layout';
 import { PrivatePage, RestrictedPage } from 'pages';
 import { routes } from 'constants/routes';
+import NotFoundPage from 'pages/NotFound.page';
 
 const HomePage = lazy(() => import('pages/Home'));
 const ContactsPage = lazy(() => import('pages/Contacts'));
@@ -54,6 +55,7 @@ export const App = () => {
             }
           />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
