@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-08-phonebook",
+  "name": "PhoneBook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://zaimak-andrii.github.io/goit-react-hw-08-phonebook/",
+  "homepage": "https://zaimak-andrii.github.io/PhoneBook/",
   "dependencies": {
     "@chakra-ui/react": "^2.4.8",
     "@emotion/react": "^11.10.5",

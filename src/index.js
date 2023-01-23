@@ -10,15 +10,15 @@ import './index.css';
 import { App } from 'components/App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-  <ChakraProvider theme={theme}>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistedStore}>
-        <BrowserRouter basename="goit-react-hw-08-phonebook">
-          <App />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </ChakraProvider>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistedStore}>
+          <BrowserRouter basename="PhoneBook">
+            <App />
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </ChakraProvider>
+  </React.StrictMode>
 );
