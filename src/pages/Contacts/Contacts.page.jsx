@@ -10,6 +10,7 @@ import UpsertContact from 'components/Contacts/UpsertContact';
 
 import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
+import ContactProvider from '../../components/Contacts/Contact.context';
 
 export default function ContactsPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,7 +28,7 @@ export default function ContactsPage() {
   };
 
   return (
-    <>
+    <ContactProvider value={{ onUpdateContact: updateContactHandler }}>
       <InputGroup mb={4}>
         <InputLeftAddon px={2} cursor="pointer" userSelect="none">
           Search
@@ -58,6 +59,6 @@ export default function ContactsPage() {
           initialValues={updateContact}
         />
       )}
-    </>
+    </ContactProvider>
   );
 }

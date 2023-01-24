@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { DeleteContactButton, UpdateContactButton } from 'components/Buttons';
 
-export default function ContactsCard({ contact, onUpdateContact }) {
+export default function ContactsCard({ contact }) {
   const { name, number, id } = contact;
 
   return (
@@ -25,7 +25,7 @@ export default function ContactsCard({ contact, onUpdateContact }) {
 
       <CardFooter justifyContent="center" pt={0}>
         <HStack>
-          <UpdateContactButton onUpdateContact={onUpdateContact} />
+          <UpdateContactButton contact={contact} />
           <DeleteContactButton id={id} />
         </HStack>
       </CardFooter>

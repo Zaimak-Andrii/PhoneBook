@@ -2,7 +2,7 @@ import { SimpleGrid, Spinner } from '@chakra-ui/react';
 import { useGetContactsQuery } from 'services/contactsAPI';
 import ContactCard from '../ContactCard';
 
-export default function ContactsList({ filter, onUpdateContact }) {
+export default function ContactsList({ filter }) {
   const { data: contacts, isFetching } = useGetContactsQuery(undefined, {
     selectFromResult: result => ({
       ...result,
@@ -29,11 +29,7 @@ export default function ContactsList({ filter, onUpdateContact }) {
       )}
       <SimpleGrid columns={[1, null, 4, 5, 6]} spacing={4}>
         {contacts?.map(contact => (
-          <ContactCard
-            key={contact.id}
-            contact={contact}
-            onUpdateContact={() => onUpdateContact(contact)}
-          />
+          <ContactCard key={contact.id} contact={contact} />
         ))}
       </SimpleGrid>
     </>
